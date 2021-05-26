@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
+
+<changeSet id="11" author="hf">
+        <createTable tableName="user_details">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_type_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="33" author="hf">
+        <createTable tableName="user_type">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="code" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(50)">
+
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet  author="hf"  id="addForeignKeyConstraint-user_details">
+        <addForeignKeyConstraint  baseColumnNames="user_type_id"
+                                  baseTableName="user_details"
+                                  constraintName="fk_user_user_type_id"
+                                  referencedColumnNames="id"
+                                  referencedTableName="user_type"
+                                  validate="true"/>
+    </changeSet>
+    <changeSet  author="hf"  id="21">
+    <insert
+            tableName="user_type">
+        <column  name="id"  value="1"/>
+        <column  name="code"  value="admin"/>
+        <column  name="description"  value="Администратор"/>
+    </insert>
+</changeSet>
+    <changeSet  author="hf"  id="23">
+        <insert
+                tableName="user_type">
+            <column  name="id"  value="2"/>
+            <column  name="code"  value="moderator"/>
+            <column  name="description"  value="Модератор"/>
+        </insert>
+    </changeSet>
+    <changeSet  author="hf"  id="32">
+        <insert
+                tableName="user_type">
+            <column  name="id"  value="3"/>
+            <column  name="code"  value="default"/>
+            <column  name="description"  value="Посетитель"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
